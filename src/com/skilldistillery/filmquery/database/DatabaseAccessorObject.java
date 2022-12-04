@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skilldistillery.filmquery.entities.Actor;
+import com.skilldistillery.filmquery.entities.Category;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
@@ -69,8 +70,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, actorId);
-
-		System.out.println(stmt);
 
 		ResultSet actorResult = stmt.executeQuery();
 
@@ -167,6 +166,38 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		conn.close();
 
 		return films;
+	}
+
+	@Override
+	public Category findCategoriesByFilmId(int filmId) throws SQLException {
+		Category category = null;
+
+		String userName = "student";
+		String pwd = "student";
+
+		// ...
+		String sql = "select category.id, category.name from category join film_category on category.id = category_id join film on film.id = film_id where film.id = ?";
+
+		Connection conn = DriverManager.getConnection(URL, userName, pwd);
+
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, filmId);
+
+		ResultSet categoryResult = stmt.executeQuery();
+
+		if (categoryResult.next()) {
+			category = new Category(); // create the object
+
+			// here is our mapping of query columns to our object fields:
+			category.setId(categoryResult.getInt("category.id"));
+			category.setName(categoryResult.getString("category.name"));
+
+		}
+		// ... conn.close();
+		stmt.close();
+		conn.close();
+
+		return category;
 	}
 
 }
