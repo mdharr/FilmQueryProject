@@ -248,7 +248,7 @@ public class FilmQueryApp {
 				counter++;
 			}
 			} else {
-			String noFilmIdMatch = "No film was found matching that numeric id.";
+			String noFilmIdMatch = "No film was found matching that numeric id. Returning to main menu.";
 			for(int i = 0; i < noFilmIdMatch.length(); i++) {
 				System.out.print(noFilmIdMatch.charAt(i) + "");
 				try {
@@ -324,7 +324,7 @@ public class FilmQueryApp {
 
 			}
 		} else {
-			String noMatchingResults = "No matching results found.";
+			String noMatchingResults = "No matching results found. Returning to main menu.";
 			
 			for(int i = 0; i < noMatchingResults.length(); i++) {
 				System.out.print(noMatchingResults.charAt(i) + "");
