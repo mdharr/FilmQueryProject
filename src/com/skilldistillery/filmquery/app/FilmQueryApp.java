@@ -21,6 +21,7 @@ public class FilmQueryApp {
 		app.launch();
 	}
 
+	@SuppressWarnings("unused")
 	private void test() throws SQLException {
 		Film film = db.findFilmById(1);
 		System.out.println(film);
@@ -55,7 +56,7 @@ public class FilmQueryApp {
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}		
-
+		
 		while (true) {
 			String firstLineStr = "+=======================================+\n"; 
 			                        
@@ -114,69 +115,77 @@ public class FilmQueryApp {
 					e.printStackTrace();
 				}
 			}
-			
-			int userInput = input.nextInt();
-			input.nextLine();
-
-			if (userInput == 1) {
-				System.out.println();
-				String enterFilmIdStr = "Enter the film id you wish to reference: ";
-				for(int i = 0; i < enterFilmIdStr.length(); i++) {
-					System.out.print(enterFilmIdStr.charAt(i) + "");
-					try {
-						Thread.sleep(50);
-					} catch(InterruptedException e) {
-						e.printStackTrace();
+			try {
+				
+				int userInput = input.nextInt();
+				input.nextLine();
+				
+				if (userInput == 1) {
+					System.out.println();
+					String enterFilmIdStr = "Enter the film id you wish to reference: ";
+					for(int i = 0; i < enterFilmIdStr.length(); i++) {
+						System.out.print(enterFilmIdStr.charAt(i) + "");
+						try {
+							Thread.sleep(50);
+						} catch(InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
+					int userFilmId = input.nextInt();
+					System.out.println();
+					input.nextLine();
+					Film film = db.findFilmById(userFilmId);
+					printFilmParameters(film);
+					continue;
+					
+				} else if (userInput == 2) {
+					System.out.println();
+					String enterKeywordStr = "Enter a keyword to search our catalogue: ";
+					for(int i = 0; i < enterKeywordStr.length(); i++) {
+						System.out.print(enterKeywordStr.charAt(i) + "");
+						try {
+							Thread.sleep(50);
+						} catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					String userSearchTerm = input.nextLine();
+					
+					System.out.println();
+					List<Film> films = db.findFilmsBySearchWord(userSearchTerm);
+					printFilmListParameters(films);
+					continue;
+					
+				} else {
+					System.out.println();
+					String exitStr = "Exiting application...";
+					String byeStr = popcorn + "Goodbye" + popcorn;
+					
+					for(int i = 0; i < exitStr.length(); i++) {
+						System.out.print(exitStr.charAt(i) + "");
+						try {
+							Thread.sleep(50);
+						} catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					System.out.println("\n");
+					for(int i = 0; i < byeStr.length(); i++) {
+						System.out.print(byeStr.charAt(i) + "");
+						try {
+							Thread.sleep(50);
+						} catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					return;
 				}
-				int userFilmId = input.nextInt();
+			} catch(InputMismatchException e) {
+				System.out.println();
+				System.out.println("Input mismatch, try again.");
 				System.out.println();
 				input.nextLine();
-				Film film = db.findFilmById(userFilmId);
-				printFilmParameters(film);
 				continue;
-				
-			} else if (userInput == 2) {
-				System.out.println();
-				String enterKeywordStr = "Enter a keyword to search our catalogue: ";
-				for(int i = 0; i < enterKeywordStr.length(); i++) {
-					System.out.print(enterKeywordStr.charAt(i) + "");
-					try {
-						Thread.sleep(50);
-					} catch(InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				String userSearchTerm = input.nextLine();
-
-				System.out.println();
-				List<Film> films = db.findFilmsBySearchWord(userSearchTerm);
-				printFilmListParameters(films);
-				continue;
-				
-			} else {
-				System.out.println();
-				String exitStr = "Exiting application...";
-				String byeStr = "Goodbye!";
-				
-				for(int i = 0; i < exitStr.length(); i++) {
-					System.out.print(exitStr.charAt(i) + "");
-					try {
-						Thread.sleep(50);
-					} catch(InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				System.out.println("\n");
-				for(int i = 0; i < byeStr.length(); i++) {
-					System.out.print(byeStr.charAt(i) + "");
-					try {
-						Thread.sleep(50);
-					} catch(InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				return;
 			}
 		}
 
@@ -259,7 +268,7 @@ public class FilmQueryApp {
 	}
 	
 	public void printFilmListParameters(List<Film> films) throws SQLException {
-		if(films != null) {
+		if(!(films.isEmpty())) {
 			for(Film film : films) {
 				System.out.println("Title: " + film.getTitle());
 				try {
@@ -316,6 +325,7 @@ public class FilmQueryApp {
 			}
 		} else {
 			String noMatchingResults = "No matching results found.";
+			
 			for(int i = 0; i < noMatchingResults.length(); i++) {
 				System.out.print(noMatchingResults.charAt(i) + "");
 				try {
@@ -324,9 +334,10 @@ public class FilmQueryApp {
 					e.printStackTrace();
 				}
 			}
+			System.out.println();
 		}
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
