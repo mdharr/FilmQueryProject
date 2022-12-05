@@ -505,8 +505,15 @@ public class FilmQueryApp {
 							e.printStackTrace();
 						}
 					}
+					
 					System.out.println("\n");
-
+					
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException ie) {
+						ie.printStackTrace();
+					}
+					
 					System.out.println("Film ID: " + film.getId());
 					try {
 						Thread.sleep(5);
@@ -635,6 +642,11 @@ public class FilmQueryApp {
 						e.printStackTrace();
 					}
 				}
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException ie) {
+					ie.printStackTrace();
+				}
 				System.out.println("\n");
 				input.nextLine();
 				continue;
@@ -705,6 +717,11 @@ public class FilmQueryApp {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
+					}
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException ie) {
+						ie.printStackTrace();
 					}
 
 					for (Film film : films) {
@@ -825,6 +842,13 @@ public class FilmQueryApp {
 							e.printStackTrace();
 						}
 					}
+					System.out.println();
+
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException ie) {
+						ie.printStackTrace();
+					}
 					break;
 				}
 			} catch (InputMismatchException e) {
@@ -839,6 +863,11 @@ public class FilmQueryApp {
 					}
 				}
 				System.out.println("\n");
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException ie) {
+					ie.printStackTrace();
+				}
 				input.nextLine();
 				continue;
 			}
